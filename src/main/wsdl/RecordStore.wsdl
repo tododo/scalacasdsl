@@ -1,0 +1,1125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://recordstore.itl.endeca.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="RecordStoreService" targetNamespace="http://recordstore.itl.endeca.com/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://record.itl.endeca.com/" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://recordstore.itl.endeca.com/">
+      <xs:import namespace="http://record.itl.endeca.com/"/>
+      <xs:element name="clean" type="tns:clean"/>
+      <xs:element name="cleanResponse" type="tns:cleanResponse"/>
+      <xs:element name="commitTransaction" type="tns:commitTransaction"/>
+      <xs:element name="commitTransactionResponse" type="tns:commitTransactionResponse"/>
+      <xs:element name="endRead" type="tns:endRead"/>
+      <xs:element name="endReadResponse" type="tns:endReadResponse"/>
+      <xs:element name="getConfiguration" type="tns:getConfiguration"/>
+      <xs:element name="getConfigurationResponse" type="tns:getConfigurationResponse"/>
+      <xs:element name="getLastCommittedGenerationId" type="tns:getLastCommittedGenerationId"/>
+      <xs:element name="getLastCommittedGenerationIdResponse" type="tns:getLastCommittedGenerationIdResponse"/>
+      <xs:element name="getLastReadGenerationId" type="tns:getLastReadGenerationId"/>
+      <xs:element name="getLastReadGenerationIdResponse" type="tns:getLastReadGenerationIdResponse"/>
+      <xs:element name="getWriteGenerationId" type="tns:getWriteGenerationId"/>
+      <xs:element name="getWriteGenerationIdResponse" type="tns:getWriteGenerationIdResponse"/>
+      <xs:element name="listActiveTransactions" type="tns:listActiveTransactions"/>
+      <xs:element name="listActiveTransactionsResponse" type="tns:listActiveTransactionsResponse"/>
+      <xs:element name="listClientStates" type="tns:listClientStates"/>
+      <xs:element name="listClientStatesResponse" type="tns:listClientStatesResponse"/>
+      <xs:element name="listGenerations" type="tns:listGenerations"/>
+      <xs:element name="listGenerationsResponse" type="tns:listGenerationsResponse"/>
+      <xs:element name="readRecords" type="tns:readRecords"/>
+      <xs:element name="readRecordsById" type="tns:readRecordsById"/>
+      <xs:element name="readRecordsByIdResponse" type="tns:readRecordsByIdResponse"/>
+      <xs:element name="readRecordsResponse" type="tns:readRecordsResponse"/>
+      <xs:element name="recordStoreConfiguration" type="tns:recordStoreConfiguration"/>
+      <xs:element name="rollbackTransaction" type="tns:rollbackTransaction"/>
+      <xs:element name="rollbackTransactionResponse" type="tns:rollbackTransactionResponse"/>
+      <xs:element name="setConfiguration" type="tns:setConfiguration"/>
+      <xs:element name="setConfigurationResponse" type="tns:setConfigurationResponse"/>
+      <xs:element name="setLastReadGenerationId" type="tns:setLastReadGenerationId"/>
+      <xs:element name="setLastReadGenerationIdResponse" type="tns:setLastReadGenerationIdResponse"/>
+      <xs:element name="startBaselineRead" type="tns:startBaselineRead"/>
+      <xs:element name="startBaselineReadResponse" type="tns:startBaselineReadResponse"/>
+      <xs:element name="startDeltaRead" type="tns:startDeltaRead"/>
+      <xs:element name="startDeltaReadResponse" type="tns:startDeltaReadResponse"/>
+      <xs:element name="startTransaction" type="tns:startTransaction"/>
+      <xs:element name="startTransactionResponse" type="tns:startTransactionResponse"/>
+      <xs:element name="writeRecords" type="tns:writeRecords"/>
+      <xs:element name="writeRecordsResponse" type="tns:writeRecordsResponse"/>
+      <xs:complexType name="clean">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="cleanResponse">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="recordStoreFault">
+        <xs:sequence>
+          <xs:element name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="concurrentWriteFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="invalidRecordFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="concurrentClientStateModificationFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="invalidGenerationFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="transactionNotFoundFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="readCursorNotFoundFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="writeNotAllowedFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="transactionStateFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="recordStoreConfigurationFault">
+        <xs:complexContent>
+          <xs:extension base="tns:recordStoreFault">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="errors">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="error" type="tns:recordStoreConfigurationError"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="recordStoreConfigurationError">
+        <xs:sequence>
+          <xs:element name="errorMessage" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="readRecordsById">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+          <xs:element minOccurs="0" name="generationId" type="tns:generationId"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="recordIds" type="tns:recordId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="transactionId">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="generationId">
+        <xs:sequence>
+          <xs:element name="id" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="recordId">
+        <xs:sequence>
+          <xs:element name="id" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="readRecordsByIdResponse">
+        <xs:sequence>
+          <xs:element name="return">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="record" type="ns1:record"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="rollbackTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="rollbackTransactionResponse">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="startDeltaRead">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+          <xs:element minOccurs="0" name="startGenerationId" type="tns:generationId"/>
+          <xs:element minOccurs="0" name="endGenerationId" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="startDeltaReadResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:readCursorId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="readCursorId">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="startBaselineRead">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+          <xs:element minOccurs="0" name="generationId" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="startBaselineReadResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:readCursorId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listActiveTransactions">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="listActiveTransactionsResponse">
+        <xs:sequence>
+          <xs:element name="return">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="transactionInfo" type="tns:transactionInfo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="transactionInfo">
+        <xs:sequence>
+          <xs:element name="lastCommittedGenerationId" type="tns:generationId"/>
+          <xs:element name="transactionId" type="tns:transactionId"/>
+          <xs:element name="transactionStatus" type="tns:transactionStatus"/>
+          <xs:element name="transactionType" type="tns:transactionType"/>
+          <xs:element minOccurs="0" name="workingGenerationId" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="writeRecords">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="records" type="ns1:record"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="writeRecordsResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="startTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionType" type="tns:transactionType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="startTransactionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="endRead">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="readCursorId" type="tns:readCursorId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="endReadResponse">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="listClientStates">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listClientStatesResponse">
+        <xs:sequence>
+          <xs:element name="return">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="clientState" type="tns:clientStateInfo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="clientStateInfo">
+        <xs:sequence>
+          <xs:element name="clientId" type="tns:clientId"/>
+          <xs:element name="committed" type="xs:boolean"/>
+          <xs:element name="lastReadGenerationId" type="tns:generationId"/>
+          <xs:element name="transactionId" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="clientId">
+        <xs:sequence>
+          <xs:element name="id" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="config" type="tns:recordStoreConfiguration"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="recordStoreConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="btreePageSize" type="xs:int"/>
+          <xs:element minOccurs="0" name="changePropertyNames">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="changePropertyName" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="cleanerInterval" type="xs:double"/>
+          <xs:element minOccurs="0" name="dataDirectory" type="xs:string"/>
+          <xs:element minOccurs="0" name="duplicateRecordCompressionEnabled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="generationRetentionTime" type="xs:double"/>
+          <xs:element minOccurs="0" name="idPropertyName" type="xs:string"/>
+          <xs:element minOccurs="0" name="ignoreInvalidRecords" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="indexWriteFlushInterval" type="xs:int"/>
+          <xs:element minOccurs="0" name="jdbmSettings" type="tns:settingList"/>
+          <xs:element minOccurs="0" name="maxDataFileSize" type="xs:long"/>
+          <xs:element minOccurs="0" name="mergeBufferSize" type="xs:int"/>
+          <xs:element minOccurs="0" name="recordCompressionEnabled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="recordsPerTransfer" type="xs:int"/>
+          <xs:element minOccurs="0" name="writeBufferSize" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="settingList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="setting" type="tns:setting"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setting">
+        <xs:simpleContent>
+          <xs:extension base="xs:string">
+            <xs:attribute name="name" type="xs:string"/>
+          </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+      <xs:complexType name="setConfigurationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:configurationWarnings"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="configurationWarnings">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="configurationStatusList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="recordStoreConfigurationStatus" type="tns:recordStoreConfigurationStatus"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="readRecords">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="readCursorId" type="tns:readCursorId"/>
+          <xs:element minOccurs="0" name="numRecords" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="readRecordsResponse">
+        <xs:sequence>
+          <xs:element name="return">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="record" type="ns1:record"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getLastCommittedGenerationId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getLastCommittedGenerationIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listGenerations">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="listGenerationsResponse">
+        <xs:sequence>
+          <xs:element name="return">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="generationInfo" type="tns:generationInfo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="generationInfo">
+        <xs:sequence>
+          <xs:element name="creationTime" type="xs:dateTime"/>
+          <xs:element name="generationId" type="tns:generationId"/>
+          <xs:element name="generationStatus" type="tns:generationStatus"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setLastReadGenerationId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+          <xs:element minOccurs="0" name="clientId" type="tns:clientId"/>
+          <xs:element minOccurs="0" name="generationId" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setLastReadGenerationIdResponse">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="commitTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="commitTransactionResponse">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getLastReadGenerationId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+          <xs:element minOccurs="0" name="clientId" type="tns:clientId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getLastReadGenerationIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getWriteGenerationId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="transactionId" type="tns:transactionId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getWriteGenerationIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:generationId"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="isNormalized" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getConfigurationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:recordStoreConfiguration"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="transactionStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ACTIVE"/>
+          <xs:enumeration value="COMMITTED"/>
+          <xs:enumeration value="ROLLED_BACK"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="transactionType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="READ"/>
+          <xs:enumeration value="READ_WRITE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="recordStoreConfigurationStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="DATA_DELETED"/>
+          <xs:enumeration value="CLEANER_DISABLED"/>
+          <xs:enumeration value="MULTIPLE_GENERATIONS_DISABLED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="generationStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="STARTED"/>
+          <xs:enumeration value="COMPLETED"/>
+          <xs:enumeration value="BEING_CLEANED"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="recordStoreFault" nillable="true" type="tns:recordStoreFault"/>
+      <xs:element name="transactionStateFault" nillable="true" type="tns:transactionStateFault"/>
+      <xs:element name="invalidGenerationFault" nillable="true" type="tns:invalidGenerationFault"/>
+      <xs:element name="transactionNotFoundFault" nillable="true" type="tns:transactionNotFoundFault"/>
+      <xs:element name="writeNotAllowedFault" nillable="true" type="tns:writeNotAllowedFault"/>
+      <xs:element name="invalidRecordFault" nillable="true" type="tns:invalidRecordFault"/>
+      <xs:element name="concurrentWriteFault" nillable="true" type="tns:concurrentWriteFault"/>
+      <xs:element name="readCursorNotFoundFault" nillable="true" type="tns:readCursorNotFoundFault"/>
+      <xs:element name="recordStoreConfigurationFault" nillable="true" type="tns:recordStoreConfigurationFault"/>
+      <xs:element name="concurrentClientStateModificationFault" nillable="true" type="tns:concurrentClientStateModificationFault"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://record.itl.endeca.com/" elementFormDefault="qualified" targetNamespace="http://record.itl.endeca.com/" version="1.0">
+      <xs:complexType final="extension restriction" name="record">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="propertyValues">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="propertyValue" type="tns:propertyValue"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType final="extension restriction" name="propertyValue">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="clean">
+    <wsdl:part name="parameters" element="tns:clean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startDeltaRead">
+    <wsdl:part name="parameters" element="tns:startDeltaRead"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidGenerationException">
+    <wsdl:part name="InvalidGenerationException" element="tns:invalidGenerationFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startTransactionResponse">
+    <wsdl:part name="parameters" element="tns:startTransactionResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listActiveTransactions">
+    <wsdl:part name="parameters" element="tns:listActiveTransactions"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConcurrentClientStateModificationException">
+    <wsdl:part name="ConcurrentClientStateModificationException" element="tns:concurrentClientStateModificationFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TransactionStateException">
+    <wsdl:part name="TransactionStateException" element="tns:transactionStateFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastCommittedGenerationIdResponse">
+    <wsdl:part name="parameters" element="tns:getLastCommittedGenerationIdResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rollbackTransactionResponse">
+    <wsdl:part name="parameters" element="tns:rollbackTransactionResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="endRead">
+    <wsdl:part name="parameters" element="tns:endRead"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="endReadResponse">
+    <wsdl:part name="parameters" element="tns:endReadResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ReadCursorNotFoundException">
+    <wsdl:part name="ReadCursorNotFoundException" element="tns:readCursorNotFoundFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="readRecords">
+    <wsdl:part name="parameters" element="tns:readRecords"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastReadGenerationIdResponse">
+    <wsdl:part name="parameters" element="tns:getLastReadGenerationIdResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="readRecordsResponse">
+    <wsdl:part name="parameters" element="tns:readRecordsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setLastReadGenerationIdResponse">
+    <wsdl:part name="parameters" element="tns:setLastReadGenerationIdResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listGenerations">
+    <wsdl:part name="parameters" element="tns:listGenerations"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setLastReadGenerationId">
+    <wsdl:part name="parameters" element="tns:setLastReadGenerationId"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="commitTransaction">
+    <wsdl:part name="parameters" element="tns:commitTransaction"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="readRecordsByIdResponse">
+    <wsdl:part name="parameters" element="tns:readRecordsByIdResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startBaselineReadResponse">
+    <wsdl:part name="parameters" element="tns:startBaselineReadResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="readRecordsById">
+    <wsdl:part name="parameters" element="tns:readRecordsById"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecordStoreConfigurationException">
+    <wsdl:part name="RecordStoreConfigurationException" element="tns:recordStoreConfigurationFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cleanResponse">
+    <wsdl:part name="parameters" element="tns:cleanResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listActiveTransactionsResponse">
+    <wsdl:part name="parameters" element="tns:listActiveTransactionsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="commitTransactionResponse">
+    <wsdl:part name="parameters" element="tns:commitTransactionResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rollbackTransaction">
+    <wsdl:part name="parameters" element="tns:rollbackTransaction"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TransactionNotFoundException">
+    <wsdl:part name="TransactionNotFoundException" element="tns:transactionNotFoundFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startBaselineRead">
+    <wsdl:part name="parameters" element="tns:startBaselineRead"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WriteNotAllowedException">
+    <wsdl:part name="WriteNotAllowedException" element="tns:writeNotAllowedFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setConfigurationResponse">
+    <wsdl:part name="parameters" element="tns:setConfigurationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="writeRecords">
+    <wsdl:part name="parameters" element="tns:writeRecords"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="writeRecordsResponse">
+    <wsdl:part name="parameters" element="tns:writeRecordsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startTransaction">
+    <wsdl:part name="parameters" element="tns:startTransaction"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConcurrentWriteException">
+    <wsdl:part name="ConcurrentWriteException" element="tns:concurrentWriteFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listClientStates">
+    <wsdl:part name="parameters" element="tns:listClientStates"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startDeltaReadResponse">
+    <wsdl:part name="parameters" element="tns:startDeltaReadResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWriteGenerationIdResponse">
+    <wsdl:part name="parameters" element="tns:getWriteGenerationIdResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidRecordException">
+    <wsdl:part name="InvalidRecordException" element="tns:invalidRecordFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setConfiguration">
+    <wsdl:part name="parameters" element="tns:setConfiguration"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getConfigurationResponse">
+    <wsdl:part name="parameters" element="tns:getConfigurationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listClientStatesResponse">
+    <wsdl:part name="parameters" element="tns:listClientStatesResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastCommittedGenerationId">
+    <wsdl:part name="parameters" element="tns:getLastCommittedGenerationId"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastReadGenerationId">
+    <wsdl:part name="parameters" element="tns:getLastReadGenerationId"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getWriteGenerationId">
+    <wsdl:part name="parameters" element="tns:getWriteGenerationId"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listGenerationsResponse">
+    <wsdl:part name="parameters" element="tns:listGenerationsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecordStoreException">
+    <wsdl:part name="RecordStoreException" element="tns:recordStoreFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getConfiguration">
+    <wsdl:part name="parameters" element="tns:getConfiguration"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RecordStore">
+    <wsdl:operation name="clean">
+      <wsdl:input name="clean" message="tns:clean"></wsdl:input>
+      <wsdl:output name="cleanResponse" message="tns:cleanResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="readRecordsById">
+      <wsdl:input name="readRecordsById" message="tns:readRecordsById"></wsdl:input>
+      <wsdl:output name="readRecordsByIdResponse" message="tns:readRecordsByIdResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException" message="tns:InvalidGenerationException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="rollbackTransaction">
+      <wsdl:input name="rollbackTransaction" message="tns:rollbackTransaction"></wsdl:input>
+      <wsdl:output name="rollbackTransactionResponse" message="tns:rollbackTransactionResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startDeltaRead">
+      <wsdl:input name="startDeltaRead" message="tns:startDeltaRead"></wsdl:input>
+      <wsdl:output name="startDeltaReadResponse" message="tns:startDeltaReadResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException" message="tns:InvalidGenerationException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startBaselineRead">
+      <wsdl:input name="startBaselineRead" message="tns:startBaselineRead"></wsdl:input>
+      <wsdl:output name="startBaselineReadResponse" message="tns:startBaselineReadResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException" message="tns:InvalidGenerationException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listActiveTransactions">
+      <wsdl:input name="listActiveTransactions" message="tns:listActiveTransactions"></wsdl:input>
+      <wsdl:output name="listActiveTransactionsResponse" message="tns:listActiveTransactionsResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="writeRecords">
+      <wsdl:input name="writeRecords" message="tns:writeRecords"></wsdl:input>
+      <wsdl:output name="writeRecordsResponse" message="tns:writeRecordsResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="WriteNotAllowedException" message="tns:WriteNotAllowedException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+      <wsdl:fault name="InvalidRecordException" message="tns:InvalidRecordException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startTransaction">
+      <wsdl:input name="startTransaction" message="tns:startTransaction"></wsdl:input>
+      <wsdl:output name="startTransactionResponse" message="tns:startTransactionResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="ConcurrentWriteException" message="tns:ConcurrentWriteException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="endRead">
+      <wsdl:input name="endRead" message="tns:endRead"></wsdl:input>
+      <wsdl:output name="endReadResponse" message="tns:endReadResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+      <wsdl:fault name="ReadCursorNotFoundException" message="tns:ReadCursorNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listClientStates">
+      <wsdl:input name="listClientStates" message="tns:listClientStates"></wsdl:input>
+      <wsdl:output name="listClientStatesResponse" message="tns:listClientStatesResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setConfiguration">
+      <wsdl:input name="setConfiguration" message="tns:setConfiguration"></wsdl:input>
+      <wsdl:output name="setConfigurationResponse" message="tns:setConfigurationResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="RecordStoreConfigurationException" message="tns:RecordStoreConfigurationException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="readRecords">
+      <wsdl:input name="readRecords" message="tns:readRecords"></wsdl:input>
+      <wsdl:output name="readRecordsResponse" message="tns:readRecordsResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+      <wsdl:fault name="ReadCursorNotFoundException" message="tns:ReadCursorNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastCommittedGenerationId">
+      <wsdl:input name="getLastCommittedGenerationId" message="tns:getLastCommittedGenerationId"></wsdl:input>
+      <wsdl:output name="getLastCommittedGenerationIdResponse" message="tns:getLastCommittedGenerationIdResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listGenerations">
+      <wsdl:input name="listGenerations" message="tns:listGenerations"></wsdl:input>
+      <wsdl:output name="listGenerationsResponse" message="tns:listGenerationsResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setLastReadGenerationId">
+      <wsdl:input name="setLastReadGenerationId" message="tns:setLastReadGenerationId"></wsdl:input>
+      <wsdl:output name="setLastReadGenerationIdResponse" message="tns:setLastReadGenerationIdResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException" message="tns:InvalidGenerationException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+      <wsdl:fault name="ConcurrentClientStateModificationException" message="tns:ConcurrentClientStateModificationException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="commitTransaction">
+      <wsdl:input name="commitTransaction" message="tns:commitTransaction"></wsdl:input>
+      <wsdl:output name="commitTransactionResponse" message="tns:commitTransactionResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastReadGenerationId">
+      <wsdl:input name="getLastReadGenerationId" message="tns:getLastReadGenerationId"></wsdl:input>
+      <wsdl:output name="getLastReadGenerationIdResponse" message="tns:getLastReadGenerationIdResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+      <wsdl:fault name="ConcurrentClientStateModificationException" message="tns:ConcurrentClientStateModificationException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWriteGenerationId">
+      <wsdl:input name="getWriteGenerationId" message="tns:getWriteGenerationId"></wsdl:input>
+      <wsdl:output name="getWriteGenerationIdResponse" message="tns:getWriteGenerationIdResponse"></wsdl:output>
+      <wsdl:fault name="RecordStoreException" message="tns:RecordStoreException"></wsdl:fault>
+      <wsdl:fault name="WriteNotAllowedException" message="tns:WriteNotAllowedException"></wsdl:fault>
+      <wsdl:fault name="TransactionStateException" message="tns:TransactionStateException"></wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException" message="tns:TransactionNotFoundException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getConfiguration">
+      <wsdl:input name="getConfiguration" message="tns:getConfiguration"></wsdl:input>
+      <wsdl:output name="getConfigurationResponse" message="tns:getConfigurationResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RecordStoreServiceSoapBinding" type="tns:RecordStore">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="clean">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="clean">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cleanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="readRecordsById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="readRecordsById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="readRecordsByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException">
+        <soap:fault name="InvalidGenerationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startDeltaRead">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="startDeltaRead">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startDeltaReadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException">
+        <soap:fault name="InvalidGenerationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="rollbackTransaction">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="rollbackTransaction">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rollbackTransactionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startBaselineRead">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="startBaselineRead">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startBaselineReadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException">
+        <soap:fault name="InvalidGenerationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listActiveTransactions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listActiveTransactions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listActiveTransactionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="writeRecords">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="writeRecords">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="writeRecordsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WriteNotAllowedException">
+        <soap:fault name="WriteNotAllowedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidRecordException">
+        <soap:fault name="InvalidRecordException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startTransaction">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="startTransaction">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startTransactionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConcurrentWriteException">
+        <soap:fault name="ConcurrentWriteException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="endRead">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="endRead">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="endReadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ReadCursorNotFoundException">
+        <soap:fault name="ReadCursorNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listClientStates">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listClientStates">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listClientStatesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setConfiguration">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setConfiguration">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setConfigurationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RecordStoreConfigurationException">
+        <soap:fault name="RecordStoreConfigurationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="readRecords">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="readRecords">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="readRecordsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ReadCursorNotFoundException">
+        <soap:fault name="ReadCursorNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastCommittedGenerationId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastCommittedGenerationId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastCommittedGenerationIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listGenerations">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listGenerations">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listGenerationsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setLastReadGenerationId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setLastReadGenerationId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setLastReadGenerationIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidGenerationException">
+        <soap:fault name="InvalidGenerationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConcurrentClientStateModificationException">
+        <soap:fault name="ConcurrentClientStateModificationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="commitTransaction">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="commitTransaction">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="commitTransactionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastReadGenerationId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastReadGenerationId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastReadGenerationIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ConcurrentClientStateModificationException">
+        <soap:fault name="ConcurrentClientStateModificationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getWriteGenerationId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getWriteGenerationId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getWriteGenerationIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="RecordStoreException">
+        <soap:fault name="RecordStoreException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WriteNotAllowedException">
+        <soap:fault name="WriteNotAllowedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionStateException">
+        <soap:fault name="TransactionStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="TransactionNotFoundException">
+        <soap:fault name="TransactionNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getConfiguration">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getConfiguration">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getConfigurationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RecordStoreService">
+    <wsdl:port name="RecordStorePort" binding="tns:RecordStoreServiceSoapBinding">
+      <soap:address location="http://localhost:8500/Discover-data"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
